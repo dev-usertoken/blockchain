@@ -13,9 +13,9 @@ const gunOptions = {
 };
 const gunGlobal = Gun(gunOptions);
 
-gun.on('out', { get: { '#': { '*': '' } } });
+gunGlobal.on('out', { get: { '#': { '*': '' } } });
 
-const gunLocal = Gun();
+const gunLocal = Gun(DEVICE_ID);
 
 // global blockChain
 const blockChain = gunGlobal.get('BLOCKCHAIN');
@@ -24,7 +24,7 @@ const blockChain = gunGlobal.get('BLOCKCHAIN');
 const aliveChannel = gunGlobal.get('ALIVE');
 
 // local peers
-const cloudPeers = gunLocal.get(DEVICE_ID);
+const cloudPeers = gunLocal.get('cloudpeers');
 
 ////////////////////////// Chain as DB Operations /////////////////
 const chainGet = key => {
@@ -38,6 +38,5 @@ const chainPut = (key, value) => {
   console.log('1.jobworker blockchain chainPut ', key, value);
   blockChain.get(key).put(value);
 };
-
 
 export { chainPut, chainGet };
